@@ -4,15 +4,10 @@ import matplotlib
 matplotlib.use("tkagg")
 import math
 
-# Calculate exhaust velocity
-
+# Constants
 thrust = 21.5 # N
 air_density = 1.2041 # kg/m^3
 prop_area = 0.0049 # m^2
-exhaust_velocity = math.sqrt(thrust / (2 * air_density * prop_area)) # m/s
-
-# Calculate torque for each vane angle
-
 vane_area = 0.000846 # m^2
 moment_arm = 0.1 # m
 
@@ -27,15 +22,15 @@ lift_coeffs = np.array([[0, 0],
                         [13.5, 1.2],
                         [15, 1]])
 
-torque_data = list()
+# Calculate exhaust velocity
+exhaust_velocity = math.sqrt(thrust / (2 * air_density * prop_area)) # m/s
 
+# Calculate torque for each vane angle
+torque_data = list()
 for x in lift_coeffs:
     lift_coefficient = x[1]
-
     lift = lift_coefficient * air_density * math.pow(exhaust_velocity, 2) * vane_area / 2
-    
     torque = lift * moment_arm
-
     torque_data.append(torque)
 
 # Plot curve
